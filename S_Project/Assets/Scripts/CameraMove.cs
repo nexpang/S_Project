@@ -38,8 +38,11 @@ public class CameraMove : MonoBehaviour
         
         if (currentPositionX - 3.5f > targetPositionX || currentPositionX + 3.5f < targetPositionX)
         {
-            targetPositionX = Mathf.Clamp(targetPositionX, xMin, xMax);
-            transform.DOMoveX(targetPositionX, 1f);
+            if (targetPosition.y > -3f)
+            {
+                targetPositionX = Mathf.Clamp(targetPositionX, xMin, xMax);
+                transform.DOMoveX(targetPositionX, 1f);
+            }
         }
     }
 }

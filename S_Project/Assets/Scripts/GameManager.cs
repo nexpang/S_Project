@@ -5,9 +5,9 @@ using UnityEngine;
 public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField]
-    public float limitMinX = -20f;
+    public float limitMinX = -25f;
     [SerializeField]
-    public float limitMaxX = 20f;
+    public float limitMaxX = 25f;
     // Start is called before the first frame update
     void Start()
     {
