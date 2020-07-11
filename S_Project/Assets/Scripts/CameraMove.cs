@@ -5,17 +5,10 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 10f;
-
     private Vector2 targetPosition = Vector2.zero;
 
     private float currentPositionX = 0f;
     private float targetPositionX = 0f;
-
-    private Camera cam = null;
-    private float halfWidth = 0f;
-    private float halfHeight = 0f;
 
     private float xMin = 0f;
     private float xMax = 0f;
@@ -38,10 +31,10 @@ public class CameraMove : MonoBehaviour
         
         if (currentPositionX - 3.5f > targetPositionX || currentPositionX + 3.5f < targetPositionX)
         {
-            if (targetPosition.y > -3f)
+            if (targetPosition.y > -2.9f)
             {
                 targetPositionX = Mathf.Clamp(targetPositionX, xMin, xMax);
-                transform.DOMoveX(targetPositionX, 1f);
+                transform.DOMoveX(targetPositionX, 2f);
             }
         }
     }
