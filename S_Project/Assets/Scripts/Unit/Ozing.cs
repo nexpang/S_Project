@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ozing : Unit
+public class Ozing : LeftUnit
 {
     protected override IEnumerator Attack()
     {
