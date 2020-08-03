@@ -7,6 +7,8 @@ public class LeftUnit : MonoBehaviour
     [SerializeField]
     protected float speed = 0.025f;
 
+    protected int hp = 3;
+
     protected bool isMoving = false;
     protected bool isAttack = false;
     protected bool isDead = false;
@@ -36,6 +38,20 @@ public class LeftUnit : MonoBehaviour
             if (isAttack || isDead)
                 return;
             StartCoroutine("Attack");
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "RightAttack")
+        {
+            if(hp <= 0)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                hp--;
+            }
         }
     }
     protected virtual void Move()

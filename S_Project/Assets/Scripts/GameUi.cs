@@ -5,11 +5,17 @@ using UnityEngine;
 public class GameUi : MonoBehaviour
 {
     [SerializeField]
-    GameObject ozing = null;
+    GameObject moono = null;
+    [SerializeField]
+    GameObject cube = null;
     [SerializeField]
     Transform spawnPoint = null;
     public void SpawnOzing()
     {
-        Instantiate(ozing, spawnPoint.position, Quaternion.identity);
+        Instantiate(moono, spawnPoint.position, Quaternion.identity);
+    }
+    public void SpawnCube()
+    {
+        Instantiate(cube, spawnPoint.position, Quaternion.identity);
     }
 }
