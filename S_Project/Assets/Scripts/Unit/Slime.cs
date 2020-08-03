@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeftCube : LeftUnit
+public class Slime : RightUnit
 {
     protected override IEnumerator Attack()
     {

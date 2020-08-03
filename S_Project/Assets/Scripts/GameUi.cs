@@ -7,15 +7,15 @@ public class GameUi : MonoBehaviour
     [SerializeField]
     GameObject moono = null;
     [SerializeField]
-    GameObject cube = null;
+    GameObject swordUnit = null;
     [SerializeField]
     Transform spawnPoint = null;
     public void SpawnOzing()
     {
         Instantiate(moono, spawnPoint.position, Quaternion.identity);
     }
-    public void SpawnCube()
+    public void SpawnUnit_Sword()
     {
-        Instantiate(cube, spawnPoint.position, Quaternion.identity);
+        Instantiate(swordUnit, spawnPoint.position, Quaternion.identity);
     }
 }

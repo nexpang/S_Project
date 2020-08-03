@@ -6,8 +6,10 @@ public class LeftUnit : MonoBehaviour
 {
     [SerializeField]
     protected float speed = 0.025f;
-
-    protected int hp = 3;
+    [SerializeField]
+    protected int hp = 4;
+    [SerializeField]
+    protected float attackDistance = 5f;
 
     protected bool isMoving = false;
     protected bool isAttack = false;
@@ -27,8 +29,8 @@ public class LeftUnit : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        Debug.DrawRay(rigid.position, new Vector2(2f, 0f), new Color(0, 1, 0));
-        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector2.right, 2f, LayerMask.GetMask("RightUnit"));
+        Debug.DrawRay(rigid.position, new Vector2(attackDistance, 0f), new Color(0, 1, 0));
+        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector2.right, attackDistance, LayerMask.GetMask("RightUnit"));
         if (rayHit.collider == null)
         {
             Move();
