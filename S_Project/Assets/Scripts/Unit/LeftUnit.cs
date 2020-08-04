@@ -17,9 +17,7 @@ public class LeftUnit : MonoBehaviour
     [SerializeField]
     protected float damageDelay = 0.5f;
 
-    protected bool isDamaged = false;
-    protected bool isAttack = false;
-    protected bool isDead = false;
+    protected bool isDamaged = false, isAttack = false, isDead = false;
 
     protected Animator animator = null;
 
