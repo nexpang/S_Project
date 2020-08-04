@@ -38,6 +38,20 @@ public class RightUnit : Unit
                 StartCoroutine("Damaged");
             }
         }
+        if (collision.tag == "LongRangeLeftAttack")
+        {
+            collision.gameObject.transform.SetParent(LeafballPoolManager.Instance.transform);
+            collision.gameObject.SetActive(false);
+            if (hp <= 0)
+            {
+                StartCoroutine("Despawn");
+            }
+            else
+            {
+                hp--;
+                StartCoroutine("Damaged");
+            }
+        }
     }
     protected override void Move()
     {

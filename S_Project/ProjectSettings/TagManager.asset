@@ -6,6 +6,8 @@ TagManager:
   tags:
   - LeftAttack
   - RightAttack
+  - LongRangeLeftAttack
+  - LongRangeRightAttack
   layers:
   - Default
   - TransparentFX
