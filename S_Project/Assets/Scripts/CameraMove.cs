@@ -28,12 +28,17 @@ public class CameraMove : MonoBehaviour
 
         targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         targetPositionX = targetPosition.x;
-        
-        if (currentPositionX  -20f > targetPositionX || currentPositionX +20f< targetPositionX)
+        if (targetPosition.y > -12f)
         {
-            if (targetPosition.y > -12f)
+            if(currentPositionX > targetPositionX+30f)
             {
-                targetPositionX = Mathf.Clamp(targetPositionX, xMin, xMax);
+                targetPositionX = Mathf.Clamp(targetPositionX + 5f, xMin, xMax);
+                transform.DOMoveX(targetPositionX, 2f);
+            }
+            targetPositionX = Mathf.Clamp(targetPositionX + 5f, xMin, xMax);
+            if(currentPositionX < targetPositionX - 30f)
+            {
+                targetPositionX = Mathf.Clamp(targetPositionX - 5f, xMin, xMax);
                 transform.DOMoveX(targetPositionX, 2f);
             }
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class RightUnit : MonoBehaviour
@@ -8,13 +9,18 @@ public class RightUnit : MonoBehaviour
     protected float speed = 0.025f;
     [SerializeField]
     protected int hp = 3;
-
-    protected bool isMoving = false;
-    protected bool isAttack = false;
-    protected bool isDead = false;
-
     [SerializeField]
     protected float attackDistance = 5f;
+
+    [Header("공격받음 관련")]
+    [SerializeField]
+    protected float force = 1f;
+    [SerializeField]
+    protected float damageDelay = 0.5f;
+
+    protected bool isDamaged = false;
+    protected bool isAttack = false;
+    protected bool isDead = false;
 
     protected Animator animator = null;
 
@@ -54,19 +60,29 @@ public class RightUnit : MonoBehaviour
             else
             {
                 hp--;
+                StartCoroutine("Damaged");
             }
         }
     }
     protected virtual void Move()
     {
+        if (isDamaged)
+            return;
         transform.Translate(Vector2.left * speed);
     }
-
+    protected virtual IEnumerator Damaged()
+    {
+        isDamaged = true;
+        //rigid.AddForce(Vector2.right*force, ForceMode2D.Impulse);
+        gameObject.transform.Translate(Vector2.right * 10 * force * Time.deltaTime);
+        yield return new WaitForSeconds(0.5f);
+        isDamaged = false;
+    }
     protected virtual IEnumerator Attack()
     {
         isAttack = true;
         transform.GetChild(0).gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(damageDelay);
         transform.GetChild(0).gameObject.SetActive(false);
         isAttack = false;
     }

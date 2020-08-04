@@ -11,7 +11,13 @@ public class LeftUnit : MonoBehaviour
     [SerializeField]
     protected float attackDistance = 5f;
 
-    protected bool isMoving = false;
+    [Header("공격받음 관련")]
+    [SerializeField]
+    protected float force = 1f;
+    [SerializeField]
+    protected float damageDelay = 0.5f;
+
+    protected bool isDamaged = false;
     protected bool isAttack = false;
     protected bool isDead = false;
 
@@ -60,7 +66,14 @@ public class LeftUnit : MonoBehaviour
     {
         transform.Translate(Vector2.right * speed);
     }
-
+    protected virtual IEnumerator Damaged()
+    {
+        isDamaged = true;
+        //rigid.AddForce(Vector2.right*left, ForceMode2D.Impulse);
+        gameObject.transform.Translate(Vector2.left * 10 * force * Time.deltaTime);
+        yield return new WaitForSeconds(damageDelay);
+        isDamaged = false;
+    }
     protected virtual IEnumerator Attack()
     {
         isAttack = true;
