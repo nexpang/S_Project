@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeftUnit : Unit
+public class SwordPoolManager : MonoSingleton<SwordPoolManager>
 {
     
 }

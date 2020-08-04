@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Unit_Sword : LeftUnit
 {
-    protected override void Start()
-    {
-        base.Start();
-        animator.Play("Unit_Sword_Idle");
-    }
     protected override IEnumerator Attack()
     {
         isAttack = true;

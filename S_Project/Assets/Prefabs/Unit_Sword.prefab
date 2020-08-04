@@ -167,7 +167,7 @@ MonoBehaviour:
   speed: 0.1
   hp: 3
   attackDistance: 6
-  force: 1
+  force: 10
   damageDelay: 0.5
 --- !u!1 &4288013633886312877
 GameObject:

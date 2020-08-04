@@ -3,36 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class RightUnit : MonoBehaviour
+public class RightUnit : Unit
 {
-    [SerializeField]
-    protected float speed = 0.025f;
-    [SerializeField]
-    protected int hp = 3;
-    [SerializeField]
-    protected float attackDistance = 5f;
-
-    [Header("공격받음 관련")]
-    [SerializeField]
-    protected float force = 1f;
-    [SerializeField]
-    protected float damageDelay = 0.5f;
-
-    protected bool isDamaged = false, isAttack = false, isDead = false;
-
-    protected Animator animator = null;
-
-    protected Rigidbody2D rigid = null;
-
-    // Start is called before the first frame update
-    protected virtual void Start()
-    {
-        rigid = gameObject.GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-    }
-
-    // Update is called once per frame
-    protected virtual void Update()
+    protected override void Update()
     {
         Debug.DrawRay(rigid.position, new Vector2(-attackDistance, 0f), new Color(0, 1, 0));
         RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector2.left, attackDistance, LayerMask.GetMask("LeftUnit"));
@@ -46,14 +19,18 @@ public class RightUnit : MonoBehaviour
                 return;
             StartCoroutine("Attack");
         }
+        if (gameObject.transform.position.x < GameManager.Instance.limitMinX - 10f)
+        {
+            StartCoroutine("Despawn");
+        }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "LeftAttack")
         {
             if (hp <= 0)
             {
-                Destroy(gameObject);
+                StartCoroutine("Despawn");
             }
             else
             {
@@ -62,26 +39,15 @@ public class RightUnit : MonoBehaviour
             }
         }
     }
-    protected virtual void Move()
+    protected override void Move()
     {
-        if (isDamaged)
-            return;
         transform.Translate(Vector2.left * speed);
     }
-    protected virtual IEnumerator Damaged()
+    protected override IEnumerator Damaged()
     {
         isDamaged = true;
-        //rigid.AddForce(Vector2.right*force, ForceMode2D.Impulse);
         gameObject.transform.Translate(Vector2.right * 10 * force * Time.deltaTime);
-        yield return new WaitForSeconds(0.5f);
-        isDamaged = false;
-    }
-    protected virtual IEnumerator Attack()
-    {
-        isAttack = true;
-        transform.GetChild(0).gameObject.SetActive(true);
         yield return new WaitForSeconds(damageDelay);
-        transform.GetChild(0).gameObject.SetActive(false);
-        isAttack = false;
+        isDamaged = false;
     }
 }

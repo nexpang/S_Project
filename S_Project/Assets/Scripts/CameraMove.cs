@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CameraMove : MonoBehaviour
 {
@@ -28,18 +29,17 @@ public class CameraMove : MonoBehaviour
 
         targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         targetPositionX = targetPosition.x;
-        if (targetPosition.y > -12f)
+        if(currentPositionX >= targetPositionX+30f || currentPositionX <= targetPositionX - 30f)
         {
-            if(currentPositionX > targetPositionX+30f)
+            if (targetPosition.y > -12f)
             {
-                targetPositionX = Mathf.Clamp(targetPositionX + 5f, xMin, xMax);
-                transform.DOMoveX(targetPositionX, 2f);
-            }
-            targetPositionX = Mathf.Clamp(targetPositionX + 5f, xMin, xMax);
-            if(currentPositionX < targetPositionX - 30f)
-            {
-                targetPositionX = Mathf.Clamp(targetPositionX - 5f, xMin, xMax);
-                transform.DOMoveX(targetPositionX, 2f);
+                if (currentPositionX >= targetPositionX + 20f)
+                {
+                    transform.DOMoveX(Mathf.Clamp(transform.position.x - 10, xMin, xMax), 1f);
+                }else if (currentPositionX <= targetPositionX - 20f)
+                {
+                    transform.DOMoveX(Mathf.Clamp(transform.position.x + 10, xMin, xMax), 1f);
+                }
             }
         }
     }
