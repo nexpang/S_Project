@@ -26,6 +26,14 @@ public class GameUi : MonoBehaviour
     private float wizardDelay = 0f;
 
     [SerializeField]
+    private GameObject lightsprit = null;
+    private GameObject lightspritobject = null;
+    [SerializeField]
+    private Button lightspritButton = null;
+    [SerializeField]
+    private float lightspritDelay = 0f;               //lightsprit - 이제윤. 제외하곤 전부 경혁잏ㅎㅎㅎㅎ.........하..........
+
+    [SerializeField]
     private Transform spawnPosition = null;
 
     ColorBlock newColorBlock = ColorBlock.defaultColorBlock;
@@ -68,6 +76,21 @@ public class GameUi : MonoBehaviour
         wizardObject.transform.position = spawnPosition.position;
         StartCoroutine("DelayWizardSpawn");
     }
+    public void SpawnUnit_LightSprit()
+    {
+        if (LightSpritPoolManager.Instance.transform.childCount > 0)
+        {
+            lightspritobject = LightSpritPoolManager.Instance.transform.GetChild(0).gameObject;
+            lightspritobject.transform.SetParent(null);
+            lightspritobject.SetActive(true);
+        }
+        else
+        {
+            lightspritobject = Instantiate(lightsprit, spawnPosition.position, Quaternion.identity);
+        }
+        lightspritobject.transform.position = spawnPosition.position;
+        StartCoroutine("DelayLightSpritSpawn");
+    }
     private IEnumerator DelaySwordSpawn()
     {
         swordButton.interactable = false;
@@ -89,5 +112,16 @@ public class GameUi : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         wizardButton.interactable = true;
+    }
+    private IEnumerator DelayLightSpritSpawn()
+    {
+        lightspritButton.interactable = false;
+        for (float i = 0f; i < 1; i += 0.1f / lightspritDelay)
+        {
+            newColorBlock.disabledColor = new Color(i, i, i, 1f);
+            lightspritButton.colors = newColorBlock;
+            yield return new WaitForSeconds(0.1f);
+        }
+        lightspritButton.interactable = true;
     }
 }
