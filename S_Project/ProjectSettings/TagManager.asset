@@ -8,6 +8,9 @@ TagManager:
   - RightAttack
   - LongRangeLeftAttack
   - LongRangeRightAttack
+  - Slime
+  - Unit_Sword
+  - Unit_Wizard
   layers:
   - Default
   - TransparentFX

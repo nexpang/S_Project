@@ -7,6 +7,8 @@ public class Leafball : MonoBehaviour
 {
     [SerializeField]
     private float speed = 0f;
+    [SerializeField]
+    private int attackDamage = 1;
 
     void Start()
     {
@@ -16,5 +18,22 @@ public class Leafball : MonoBehaviour
     void Update()
     {
         gameObject.transform.Translate(Vector3.right * speed * Time.deltaTime);
+    }
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.tag == "Slime")
+        {
+            collider.GetComponent<Slime>().TakeDamage(attackDamage);
+        }
+        if (collider.tag == "Unit_Sword")
+        {
+            collider.GetComponent<Slime>().TakeDamage(attackDamage);
+        }
+        if (collider.tag == "Unit_Wizard")
+        {
+            collider.GetComponent<Slime>().TakeDamage(attackDamage);
+        }
+        gameObject.transform.SetParent(LeafballPoolManager.Instance.transform);
+        gameObject.SetActive(false);
     }
 }
