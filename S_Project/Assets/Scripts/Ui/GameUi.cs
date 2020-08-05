@@ -71,22 +71,22 @@ public class GameUi : MonoBehaviour
     private IEnumerator DelaySwordSpawn()
     {
         swordButton.interactable = false;
-        for (float i = 0.01f; i< swordDelay;i += 0.01f)
+        for (float i = 0f; i< swordDelay;i += 0.1f/swordDelay)
         {
             newColorBlock.disabledColor = new Color (i,i,i,1f);
             swordButton.colors = newColorBlock;
-            yield return new WaitForSeconds(0.001f);
+            yield return new WaitForSeconds(0.1f);
         }
         swordButton.interactable = true;
     }
     private IEnumerator DelayWizardSpawn()
     {
         wizardButton.interactable = false;
-        for (float i = 0.01f/wizardDelay; i < 1; i += 0.01f)
+        for (float i = 0f; i < 1; i += 0.1f/wizardDelay)
         {
             newColorBlock.disabledColor = new Color(i, i, i, 1f);
             wizardButton.colors = newColorBlock;
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.1f);
         }
         wizardButton.interactable = true;
     }
