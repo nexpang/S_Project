@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6798651566590251423}
   m_Layer: 8
   m_Name: Unit_Wizard
-  m_TagString: Untagged
+  m_TagString: Unit_Wizard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 392cf6ca64596564e9a61e060d3b2103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
+  speed: 0.2
   hp: 4
   attackDistance: 30
   force: 1

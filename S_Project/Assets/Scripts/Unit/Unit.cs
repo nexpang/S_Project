@@ -7,7 +7,7 @@ public class Unit : MonoBehaviour
     [SerializeField]
     protected float speed = 0.025f;
     [SerializeField]
-    protected int hp = 4;
+    public int hp = 4;
     [SerializeField]
     protected float attackDistance = 5f;
 
@@ -31,7 +31,7 @@ public class Unit : MonoBehaviour
     }
 
     // Update is called once per frame
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
         Debug.DrawRay(rigid.position, new Vector2(attackDistance, 0f), new Color(0, 1, 0));
         RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector2.right, attackDistance, LayerMask.GetMask("RightUnit"));
@@ -50,38 +50,51 @@ public class Unit : MonoBehaviour
             StartCoroutine("Despawn");
         }
     }
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "RightAttack")
-        {
-            if (hp <= 0)
-            {
-                StartCoroutine("Despawn");
-            }
-            else
-            {
-                hp--;
-                StartCoroutine("Damaged");
-            }
-        }
-        if (collision.tag == "LongRangeRightAttack")
-        {
-            collision.gameObject.transform.SetParent(LeafballPoolManager.Instance.transform);
-            collision.gameObject.SetActive(false);
-            if (hp <= 0)
-            {
-                StartCoroutine("Despawn");
-            }
-            else
-            {
-                hp--;
-                StartCoroutine("Damaged");
-            }
-        }
-    }
+    //protected virtual void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.tag == "RightAttack")
+    //    {
+    //        if (hp <= 0)
+    //        {
+    //            StartCoroutine("Despawn");
+    //        }
+    //        else
+    //        {
+    //            hp--;
+    //            StartCoroutine("Damaged");
+    //        }
+    //    }
+    //    if (collision.tag == "LongRangeRightAttack")
+    //    {
+    //        collision.gameObject.transform.SetParent(LeafballPoolManager.Instance.transform);
+    //        collision.gameObject.SetActive(false);
+    //        if (hp <= 0)
+    //        {
+    //            StartCoroutine("Despawn");
+    //        }
+    //        else
+    //        {
+    //            hp--;
+    //            StartCoroutine("Damaged");
+    //        }
+    //    }
+    //}
     protected virtual void Move()
     {
         transform.Translate(Vector2.right * speed);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (hp <= 0)
+        {
+            StartCoroutine("Despawn");
+        }
+        else
+        {
+            hp -= damage;
+            StartCoroutine("Damaged");
+        }
     }
     protected virtual IEnumerator Despawn()
     {
@@ -90,9 +103,11 @@ public class Unit : MonoBehaviour
     }
     protected virtual IEnumerator Damaged()
     {
+        int critical = Random.Range(0, 10);
         isDamaged = true;
         //rigid.AddForce(Vector2.right*left, ForceMode2D.Impulse);
-        gameObject.transform.Translate(Vector2.left * 10 * force * Time.deltaTime);
+        if (critical == 0)
+            gameObject.transform.Translate(Vector2.left * 10 * force * Time.deltaTime);
         yield return new WaitForSeconds(damageDelay);
         isDamaged = false;
     }
