@@ -21,17 +21,20 @@ public class Leafball : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.tag == "Slime")
+        if (collider.gameObject.layer == 9)
         {
-            collider.GetComponent<Slime>().TakeDamage(attackDamage);
-        }
-        if (collider.tag == "Unit_Sword")
-        {
-            collider.GetComponent<Slime>().TakeDamage(attackDamage);
-        }
-        if (collider.tag == "Unit_Wizard")
-        {
-            collider.GetComponent<Slime>().TakeDamage(attackDamage);
+            if (collider.tag == "Slime")
+            {
+                collider.GetComponent<Slime>().TakeDamage(attackDamage);
+            }
+            if (collider.tag == "Unit_Sword")
+            {
+                collider.GetComponent<Unit_Sword>().TakeDamage(attackDamage);
+            }
+            if (collider.tag == "Unit_Wizard")
+            {
+                collider.GetComponent<Unit_Wizard>().TakeDamage(attackDamage);
+            }
         }
         gameObject.transform.SetParent(LeafballPoolManager.Instance.transform);
         gameObject.SetActive(false);
