@@ -1,19 +1,39 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameUi : MonoBehaviour
 {
     [SerializeField]
     private GameObject moono = null;
+
     [SerializeField]
     private GameObject swordUnit = null;
     private GameObject swordObject = null;
     [SerializeField]
+    private Button swordButton = null;
+    [SerializeField]
+    private float swordDelay = 0f;
+
+    [SerializeField]
     private GameObject wizardUnit = null;
     private GameObject wizardObject = null;
     [SerializeField]
+    private Button wizardButton = null;
+    [SerializeField]
+    private float wizardDelay = 0f;
+
+    [SerializeField]
     private Transform spawnPosition = null;
+
+    ColorBlock newColorBlock = ColorBlock.defaultColorBlock;
+
+    private void Start()
+    {
+        newColorBlock = swordButton.colors;
+    }
     public void SpawnOzing()
     {
         Instantiate(moono, spawnPosition.position, Quaternion.identity);
@@ -31,6 +51,7 @@ public class GameUi : MonoBehaviour
             swordObject = Instantiate(swordUnit, spawnPosition.position, Quaternion.identity);
         }
         swordObject.transform.position = spawnPosition.position;
+        StartCoroutine("DelaySwordSpawn");
     }
     public void SpawnUnit_Wizard()
     {
@@ -45,5 +66,28 @@ public class GameUi : MonoBehaviour
             wizardObject = Instantiate(wizardUnit, spawnPosition.position, Quaternion.identity);
         }
         wizardObject.transform.position = spawnPosition.position;
+        StartCoroutine("DelayWizardSpawn");
+    }
+    private IEnumerator DelaySwordSpawn()
+    {
+        swordButton.interactable = false;
+        for (float i = 0.01f; i< swordDelay;i += 0.01f)
+        {
+            newColorBlock.disabledColor = new Color (i,i,i,1f);
+            swordButton.colors = newColorBlock;
+            yield return new WaitForSeconds(0.001f);
+        }
+        swordButton.interactable = true;
+    }
+    private IEnumerator DelayWizardSpawn()
+    {
+        wizardButton.interactable = false;
+        for (float i = 0.01f/wizardDelay; i < 1; i += 0.01f)
+        {
+            newColorBlock.disabledColor = new Color(i, i, i, 1f);
+            wizardButton.colors = newColorBlock;
+            yield return new WaitForSeconds(0.01f);
+        }
+        wizardButton.interactable = true;
     }
 }
