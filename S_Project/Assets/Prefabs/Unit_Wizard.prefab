@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.2
-  hp: 4
+  hp: 60
   attackDistance: 30
   force: 1
   damageDelay: 0.5

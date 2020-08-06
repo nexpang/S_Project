@@ -69,4 +69,11 @@ public class Unit_Sword : LeftUnit
         yield return new WaitForSeconds(attackDelay);
         isAttack = false;
     }
+    protected override IEnumerator Despawn()
+    {
+        GetComponent<BoxCollider2D>().enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        gameObject.transform.SetParent(SwordPoolManager.Instance.transform);
+        gameObject.SetActive(false);
+    }
 }

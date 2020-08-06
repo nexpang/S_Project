@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Stage2 : MonoBehaviour
 {
@@ -14,26 +15,29 @@ public class Stage2 : MonoBehaviour
 
     [SerializeField]
     private Transform spawnPosition = null;
+
+    public bool gameOver = false;
     void Start()
     {
-        StartCoroutine("SpawnSwordEnemy");
-        StartCoroutine("SpawnWizardEnemy");
+        StartCoroutine("Wait");
+
+        FindObjectOfType<Tower>().stage = 1;
     }
 
     void Update()
     {
-
+        //gameOver = FindObjectOfType<Tower>().gameOver;
     }
     private IEnumerator SpawnSwordEnemy()
     {
-        while (true)
+        while (gameOver == false)
         {
-            yield return new WaitForSeconds(Random.Range(3f, 5f));
             if (SwordPoolManager.Instance.transform.childCount > 0)
             {
                 swordObject = SwordPoolManager.Instance.transform.GetChild(0).gameObject;
                 swordObject.transform.SetParent(null);
                 swordObject.SetActive(true);
+                swordObject.GetComponent<BoxCollider2D>().enabled = true;
             }
             else
             {
@@ -42,18 +46,19 @@ public class Stage2 : MonoBehaviour
             swordObject.transform.localRotation = Quaternion.Euler(0, -180, 0);
             swordObject.transform.position = spawnPosition.position;
             swordObject.layer = 9;
+            yield return new WaitForSeconds(Random.Range(4, 5));
         }
     }
     private IEnumerator SpawnWizardEnemy()
     {
-        while (true)
+        while (gameOver == false)
         {
-            yield return new WaitForSeconds(Random.Range(5f, 8f));
             if (SwordPoolManager.Instance.transform.childCount > 0)
             {
                 wizardObject = SwordPoolManager.Instance.transform.GetChild(0).gameObject;
                 wizardObject.transform.SetParent(null);
                 wizardObject.SetActive(true);
+                wizardObject.GetComponent<BoxCollider2D>().enabled = true;
             }
             else
             {
@@ -62,6 +67,22 @@ public class Stage2 : MonoBehaviour
             wizardObject.transform.localRotation = Quaternion.Euler(0, -180, 0);
             wizardObject.transform.position = spawnPosition.position;
             wizardObject.layer = 9;
+            yield return new WaitForSeconds(Random.Range(5, 8));
         }
+    }
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(3f);
+        StartCoroutine("SpawnSwordEnemy");
+        yield return new WaitForSeconds(2f);
+        StartCoroutine("SpawnWizardEnemy");
+    }
+    public void LoadStage()
+    {
+        SceneManager.LoadScene("StageScene");
+    }
+    public void Stage2_Start()
+    {
+        SceneManager.LoadScene("Stage2");
     }
 }

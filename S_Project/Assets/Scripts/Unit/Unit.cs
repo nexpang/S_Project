@@ -25,14 +25,12 @@ public class Unit : MonoBehaviour
 
     protected string layerMask = null;
     protected Vector2 castDirection = Vector2.zero;
-    // Start is called before the first frame update
     protected virtual void Start()
     {
         rigid = gameObject.GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     protected virtual void FixedUpdate()
     {
         Debug.DrawRay(rigid.position, new Vector2(attackDistance, 0f), new Color(0, 1, 0));
@@ -60,7 +58,9 @@ public class Unit : MonoBehaviour
         if(gameObject.transform.position.x > GameManager.Instance.limitMaxX + 10f)
         {
             StartCoroutine("Despawn");
-        }
+        } 
+        else if(gameObject.transform.position.x < GameManager.Instance.limitMinX - 10f)
+            StartCoroutine("Despawn");
     }
     //protected virtual void OnTriggerEnter2D(Collider2D collision)
     //{
@@ -116,17 +116,9 @@ public class Unit : MonoBehaviour
     protected virtual IEnumerator Damaged()
     {
         int critical = Random.Range(0, 10);
-        //rigid.AddForce(Vector2.right*left, ForceMode2D.Impulse);
         if (critical == 0)
         {
-            if(gameObject.layer == 8)
-            {
-                gameObject.transform.Translate(Vector2.left * 10 * force * Time.deltaTime);
-            }
-            else
-            {
-                gameObject.transform.Translate(Vector2.right * 10 * force * Time.deltaTime);
-            }
+            gameObject.transform.Translate(Vector2.left * 10 * force * Time.deltaTime);
             yield return new WaitForSeconds(damageDelay);
         }
     }

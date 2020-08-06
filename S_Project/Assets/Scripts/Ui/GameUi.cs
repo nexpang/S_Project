@@ -62,6 +62,7 @@ public class GameUi : MonoBehaviour
             swordObject = SwordPoolManager.Instance.transform.GetChild(0).gameObject;
             swordObject.transform.SetParent(null);
             swordObject.SetActive(true);
+            swordObject.GetComponent<BoxCollider2D>().enabled = true;
         }
         else
         {
@@ -84,6 +85,7 @@ public class GameUi : MonoBehaviour
             wizardObject = WizardPoolManager.Instance.transform.GetChild(0).gameObject;
             wizardObject.transform.SetParent(null);
             wizardObject.SetActive(true);
+            wizardObject.GetComponent<BoxCollider2D>().enabled = true;
         }
         else
         {
@@ -106,6 +108,7 @@ public class GameUi : MonoBehaviour
             lightspritobject = LightSpritPoolManager.Instance.transform.GetChild(0).gameObject;
             lightspritobject.transform.SetParent(null);
             lightspritobject.SetActive(true);
+            lightspritobject.GetComponent<BoxCollider2D>().enabled = true;
         }
         else
         {
@@ -117,7 +120,7 @@ public class GameUi : MonoBehaviour
     private IEnumerator DelaySwordSpawn()
     {
         swordButton.interactable = false;
-        for (float i = 0f; i< swordDelay;i += 0.1f/swordDelay)
+        for (float i = 0f; i < 1;i += 0.1f/swordDelay)
         {
             newColorBlock.disabledColor = new Color (i,i,i,1f);
             swordButton.colors = newColorBlock;
