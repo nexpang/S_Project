@@ -23,6 +23,8 @@ public class Unit : MonoBehaviour
 
     protected Rigidbody2D rigid = null;
 
+    protected string layerMask = null;
+    protected Vector2 castDirection = Vector2.zero;
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -34,7 +36,17 @@ public class Unit : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         Debug.DrawRay(rigid.position, new Vector2(attackDistance, 0f), new Color(0, 1, 0));
-        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector2.right, attackDistance, LayerMask.GetMask("RightUnit"));
+        if(gameObject.layer == 8)
+        {
+            castDirection = Vector2.right;
+            layerMask = "RightUnit";
+        }
+        else
+        {
+            castDirection = Vector2.left;
+            layerMask = "LeftUnit";
+        }
+        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, castDirection, attackDistance, LayerMask.GetMask(layerMask));
         if (rayHit.collider == null)
         {
             Move();
@@ -98,18 +110,25 @@ public class Unit : MonoBehaviour
     }
     protected virtual IEnumerator Despawn()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
         Destroy(gameObject);
     }
     protected virtual IEnumerator Damaged()
     {
         int critical = Random.Range(0, 10);
-        isDamaged = true;
         //rigid.AddForce(Vector2.right*left, ForceMode2D.Impulse);
         if (critical == 0)
-            gameObject.transform.Translate(Vector2.left * 10 * force * Time.deltaTime);
-        yield return new WaitForSeconds(damageDelay);
-        isDamaged = false;
+        {
+            if(gameObject.layer == 8)
+            {
+                gameObject.transform.Translate(Vector2.left * 10 * force * Time.deltaTime);
+            }
+            else
+            {
+                gameObject.transform.Translate(Vector2.right * 10 * force * Time.deltaTime);
+            }
+            yield return new WaitForSeconds(damageDelay);
+        }
     }
     protected virtual IEnumerator Attack()
     {

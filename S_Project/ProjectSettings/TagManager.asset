@@ -11,6 +11,8 @@ TagManager:
   - Slime
   - Unit_Sword
   - Unit_Wizard
+  - LeftTower
+  - RightTower
   layers:
   - Default
   - TransparentFX

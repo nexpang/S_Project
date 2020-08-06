@@ -7,15 +7,14 @@ using UnityEngine.UI;
 public class GameUi : MonoBehaviour
 {
     [SerializeField]
-    private GameObject moono = null;
-
-    [SerializeField]
     private GameObject swordUnit = null;
     private GameObject swordObject = null;
     [SerializeField]
     private Button swordButton = null;
     [SerializeField]
     private float swordDelay = 0f;
+    [SerializeField]
+    private int swordCost = 100;
 
     [SerializeField]
     private GameObject wizardUnit = null;
@@ -24,6 +23,8 @@ public class GameUi : MonoBehaviour
     private Button wizardButton = null;
     [SerializeField]
     private float wizardDelay = 0f;
+    [SerializeField]
+    private int wizardCost = 100;
 
     [SerializeField]
     private GameObject lightsprit = null;
@@ -32,22 +33,30 @@ public class GameUi : MonoBehaviour
     private Button lightspritButton = null;
     [SerializeField]
     private float lightspritDelay = 0f;               //lightsprit - 이제윤. 제외하곤 전부 경혁잏ㅎㅎㅎㅎ.........하..........
+    [SerializeField]
+    private int lightspritCost = 100;
 
     [SerializeField]
     private Transform spawnPosition = null;
 
     ColorBlock newColorBlock = ColorBlock.defaultColorBlock;
 
+    [SerializeField]
+    private Text textCost = null;
+    private float c = 0;
+    private float cost = 0;
     private void Start()
     {
         newColorBlock = swordButton.colors;
     }
-    public void SpawnOzing()
-    {
-        Instantiate(moono, spawnPosition.position, Quaternion.identity);
-    }
     public void SpawnUnit_Sword()
     {
+        c = float.Parse(textCost.text);
+        cost = c;
+        if (cost < swordCost)
+            return;
+        cost -= swordCost;
+        textCost.text = string.Format("{0:F0}", cost);
         if (SwordPoolManager.Instance.transform.childCount > 0)
         {
             swordObject = SwordPoolManager.Instance.transform.GetChild(0).gameObject;
@@ -59,10 +68,17 @@ public class GameUi : MonoBehaviour
             swordObject = Instantiate(swordUnit, spawnPosition.position, Quaternion.identity);
         }
         swordObject.transform.position = spawnPosition.position;
+        swordObject.layer = 8;
         StartCoroutine("DelaySwordSpawn");
     }
     public void SpawnUnit_Wizard()
     {
+        c = float.Parse(textCost.text);
+        cost = c;
+        if (cost < wizardCost)
+            return;
+        cost -= wizardCost;
+        textCost.text = string.Format("{0:F0}", cost);
         if (WizardPoolManager.Instance.transform.childCount > 0)
         {
             wizardObject = WizardPoolManager.Instance.transform.GetChild(0).gameObject;
@@ -74,10 +90,17 @@ public class GameUi : MonoBehaviour
             wizardObject = Instantiate(wizardUnit, spawnPosition.position, Quaternion.identity);
         }
         wizardObject.transform.position = spawnPosition.position;
+        wizardObject.layer = 8;
         StartCoroutine("DelayWizardSpawn");
     }
     public void SpawnUnit_LightSprit()
     {
+        c = float.Parse(textCost.text);
+        cost = c;
+        if (cost < lightspritCost)
+            return;
+        cost -= lightspritCost;
+        textCost.text = string.Format("{0:F0}", cost);
         if (LightSpritPoolManager.Instance.transform.childCount > 0)
         {
             lightspritobject = LightSpritPoolManager.Instance.transform.GetChild(0).gameObject;

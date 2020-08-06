@@ -21,22 +21,53 @@ public class Leafball : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.layer == 9)
+        if (gameObject.transform.localRotation.y == 0)
         {
-            if (collider.tag == "Slime")
+            if (collider.gameObject.layer == 9)
             {
-                collider.GetComponent<Slime>().TakeDamage(attackDamage);
-            }
-            if (collider.tag == "Unit_Sword")
-            {
-                collider.GetComponent<Unit_Sword>().TakeDamage(attackDamage);
-            }
-            if (collider.tag == "Unit_Wizard")
-            {
-                collider.GetComponent<Unit_Wizard>().TakeDamage(attackDamage);
+                if (collider.tag == "Unit_Sword")
+                {
+                    collider.GetComponent<Unit_Sword>().TakeDamage(attackDamage);
+                }
+                if (collider.tag == "Unit_Wizard")
+                {
+                    collider.GetComponent<Unit_Wizard>().TakeDamage(attackDamage);
+                }
+                if (collider.tag == "LeftTower")
+                {
+                    collider.GetComponent<Tower>().TakeDamage(attackDamage);
+                }
+                if (collider.tag == "RightTower")
+                {
+                    collider.GetComponent<Tower>().TakeDamage(attackDamage);
+                }
+                gameObject.transform.SetParent(LeafballPoolManager.Instance.transform);
+                gameObject.SetActive(false);
             }
         }
-        gameObject.transform.SetParent(LeafballPoolManager.Instance.transform);
-        gameObject.SetActive(false);
+        else
+        {
+            if (collider.gameObject.layer == 8)
+            {
+                if (collider.tag == "Unit_Sword")
+                {
+                    collider.GetComponent<Unit_Sword>().TakeDamage(attackDamage);
+                }
+                if (collider.tag == "Unit_Wizard")
+                {
+                    collider.GetComponent<Unit_Wizard>().TakeDamage(attackDamage);
+                }
+                if (collider.tag == "LeftTower")
+                {
+                    collider.GetComponent<Tower>().TakeDamage(attackDamage);
+                }
+                if (collider.tag == "RightTower")
+                {
+                    collider.GetComponent<Tower>().TakeDamage(attackDamage);
+                }
+                gameObject.transform.SetParent(LeafballPoolManager.Instance.transform);
+                gameObject.SetActive(false);
+            }
+        }
     }
 }

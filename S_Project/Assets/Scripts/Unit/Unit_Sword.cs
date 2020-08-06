@@ -18,19 +18,48 @@ public class Unit_Sword : LeftUnit
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(transform.GetChild(0).position, boxSize, 0);
         foreach(Collider2D collider in collider2Ds)
         {
-            if (collider.gameObject.layer == 9)
+            if(gameObject.layer == 8)
             {
-                if (collider.tag == "Slime")
+                if (collider.gameObject.layer == 9)
                 {
-                    collider.GetComponent<Slime>().TakeDamage(attackDamage);
+                    if (collider.tag == "Unit_Sword")
+                    {
+                        collider.GetComponent<Unit_Sword>().TakeDamage(attackDamage);
+                    }
+                    if (collider.tag == "Unit_Wizard")
+                    {
+                        collider.GetComponent<Unit_Wizard>().TakeDamage(attackDamage);
+                    }
+                    if (collider.tag == "LeftTower")
+                    {
+                        collider.GetComponent<Tower>().TakeDamage(attackDamage);
+                    }
+                    if (collider.tag == "RightTower")
+                    {
+                        collider.GetComponent<Tower>().TakeDamage(attackDamage);
+                    }
                 }
-                if (collider.tag == "Unit_Sword")
+            }
+            else
+            {
+                if (collider.gameObject.layer == 8)
                 {
-                    collider.GetComponent<Unit_Sword>().TakeDamage(attackDamage);
-                }
-                if (collider.tag == "Unit_Wizard")
-                {
-                    collider.GetComponent<Unit_Wizard>().TakeDamage(attackDamage);
+                    if (collider.tag == "Unit_Sword")
+                    {
+                        collider.GetComponent<Unit_Sword>().TakeDamage(attackDamage);
+                    }
+                    if (collider.tag == "Unit_Wizard")
+                    {
+                        collider.GetComponent<Unit_Wizard>().TakeDamage(attackDamage);
+                    }
+                    if (collider.tag == "LeftTower")
+                    {
+                        collider.GetComponent<Tower>().TakeDamage(attackDamage);
+                    }
+                    if (collider.tag == "RightTower")
+                    {
+                        collider.GetComponent<Tower>().TakeDamage(attackDamage);
+                    }
                 }
             }
         }

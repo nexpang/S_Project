@@ -7,7 +7,7 @@ public class MenuUi : MonoBehaviour
 {
     public void StartButton()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("StageScene");
     }
     public void GameExit()
     {
